@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+
+{% block body %}
+<section class="mx-auto max-w-3xl px-4 py-10 space-y-6">
+  <header class="space-y-2">
+    <h1 class="text-3xl font-semibold tracking-tight">ATS score</h1>
+    <p class="text-neutral-600">Deterministic heuristics against your stored resume.</p>
+  </header>
+
+  <form id="ats-form" class="space-y-3">
+    <label class="block text-sm font-medium" for="job_description">Job description (optional)</label>
+    <textarea id="job_description" name="job_description" rows="6"
+      class="w-full border border-neutral-300 px-3 py-2 text-sm"
+      placeholder="Paste the job description to check keyword overlap…"></textarea>
+    <button type="submit" class="bg-neutral-900 text-white px-4 py-2 text-sm">Score resume</button>
+  </form>
+
+  <pre id="ats-result" class="overflow-auto border border-neutral-200 bg-neutral-50 p-4 text-xs min-h-40"></pre>
+</section>
+{% endblock %}

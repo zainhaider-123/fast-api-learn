@@ -1,0 +1,89 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.35em}
+\setlist[itemize]{leftmargin=*,itemsep=0.1em,topsep=0.15em}
+
+\begin{document}
+
+{\LARGE\bfseries {{ contact.name }}\par}
+\vspace{0.3em}
+{% if contact.email %}{{ contact.email }}{% endif %}
+{% if contact.phone %} $|$ {{ contact.phone }}{% endif %}
+{% if contact.location %} $|$ {{ contact.location }}{% endif %}
+{% if contact.website or contact.github or contact.linkedin %}
+
+{% if contact.website %}\href{ {{- contact.website -}} }{ {{- contact.website_label -}} }{% endif %}
+{% if contact.github %}{% if contact.website %} $|$ {% endif %}\href{ {{- contact.github -}} }{GitHub}{% endif %}
+{% if contact.linkedin %}{% if contact.website or contact.github %} $|$ {% endif %}\href{ {{- contact.linkedin -}} }{LinkedIn}{% endif %}
+{% endif %}
+
+\vspace{0.6em}
+\hrule
+\vspace{0.4em}
+
+{% if summary %}
+{\bfseries SUMMARY}\par
+{{ summary }}
+\vspace{0.3em}
+{% endif %}
+
+{% if experiences %}
+{\bfseries EXPERIENCE}\par
+{% for job in experiences %}
+{{ job.title }}, {{ job.company }}{% if job.location %} --- {{ job.location }}{% endif %}\\
+{{ job.dates }}
+{% if job.bullets %}
+\begin{itemize}
+{% for bullet in job.bullets %}
+  \item {{ bullet }}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if educations %}
+{\bfseries EDUCATION}\par
+{% for edu in educations %}
+{{ edu.degree }}, {{ edu.institution }}{% if edu.location %} --- {{ edu.location }}{% endif %}\\
+{{ edu.dates }}{% if edu.gpa %} $|$ GPA: {{ edu.gpa }}{% endif %}
+
+{% endfor %}
+{% endif %}
+
+{% if skills %}
+{\bfseries SKILLS}\par
+{{ skills_line }}
+{% endif %}
+
+{% if projects %}
+{\bfseries PROJECTS}\par
+{% for project in projects %}
+{{ project.name }}{% if project.link %} (\href{ {{- project.link -}} }{ {{- project.link_label -}} }){% endif %}\\
+{{ project.description }}
+{% if project.highlights %}
+\begin{itemize}
+{% for h in project.highlights %}
+  \item {{ h }}
+{% endfor %}
+\end{itemize}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if certifications %}
+{\bfseries CERTIFICATIONS}\par
+{% for cert in certifications %}
+{{ cert.name }}, {{ cert.issuer }}{% if cert.date %} --- {{ cert.date }}{% endif %}
+
+{% endfor %}
+{% endif %}
+
+\end{document}

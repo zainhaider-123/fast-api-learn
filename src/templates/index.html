@@ -1,5 +1,28 @@
 {% extends "_base.html" %}
 
 {% block body %}
-<h1>{{ title }}</h1>
+<section class="mx-auto max-w-2xl px-4 py-10 space-y-10">
+  <header class="space-y-2">
+    <h1 class="text-3xl font-semibold tracking-tight">{{ title }}</h1>
+    <p class="text-neutral-600">Paste a resume or describe a role. The API validates everything with Pydantic.</p>
+  </header>
+
+  <form id="generate-form" class="space-y-3">
+    <label class="block text-sm font-medium" for="prompt">Describe the resume to generate</label>
+    <textarea id="prompt" name="prompt" rows="5" required
+      class="w-full border border-neutral-300 px-3 py-2 text-sm"
+      placeholder="Senior Python engineer, 5 years FastAPI, based in Berlin…"></textarea>
+    <button type="submit" class="bg-neutral-900 text-white px-4 py-2 text-sm">Generate with AI</button>
+  </form>
+
+  <form id="parse-form" class="space-y-3">
+    <label class="block text-sm font-medium" for="text">Or paste resume JSON / Name:+Email: text</label>
+    <textarea id="text" name="text" rows="8" required
+      class="w-full border border-neutral-300 px-3 py-2 font-mono text-xs"
+      placeholder='{"contact":{"name":"…","email":"…"}, …}'></textarea>
+    <button type="submit" class="border border-neutral-900 px-4 py-2 text-sm">Parse &amp; save</button>
+  </form>
+
+  <p id="status" class="text-sm text-neutral-600" data-state=""></p>
+</section>
 {% endblock %}

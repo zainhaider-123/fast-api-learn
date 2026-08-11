@@ -15,3 +15,6 @@ node_modules/
 
 # Generated Tailwind build output
 src/static/css/style.css
+
+# Local resume store
+data/

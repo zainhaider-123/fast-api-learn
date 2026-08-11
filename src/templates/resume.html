@@ -1,0 +1,49 @@
+{% extends "_base.html" %}
+
+{% block body %}
+<section class="mx-auto max-w-3xl px-4 py-10 space-y-6">
+  <header class="space-y-2">
+    <h1 class="text-3xl font-semibold tracking-tight">Resume</h1>
+    <p class="text-neutral-600">Loaded from storage. Export TeX or run ATS checks.</p>
+  </header>
+
+  <div class="flex flex-wrap gap-3 text-sm">
+    <a id="export-tex" class="border border-neutral-900 px-3 py-2" href="#">Download .tex</a>
+    <a id="run-ats" class="bg-neutral-900 text-white px-3 py-2" href="#">Run ATS</a>
+  </div>
+
+  <pre id="resume-json" class="overflow-auto border border-neutral-200 bg-neutral-50 p-4 text-xs"></pre>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  (async () => {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id") || sessionStorage.getItem("resumeId");
+    const pre = document.getElementById("resume-json");
+    const exportLink = document.getElementById("export-tex");
+    const atsLink = document.getElementById("run-ats");
+
+    if (!id) {
+      pre.textContent = "No resume id. Create one on the home page.";
+      return;
+    }
+
+    exportLink.href = `/resume/${id}/export.tex`;
+    atsLink.href = `/ats?id=${id}`;
+
+    try {
+      const resume = await fetch(`/resume/${id}`).then((r) => {
+        if (!r.ok) throw new Error("Resume not found");
+        return r.json();
+      });
+      pre.textContent = JSON.stringify(resume, null, 2);
+      sessionStorage.setItem("resumeId", id);
+      sessionStorage.setItem("resume", JSON.stringify(resume));
+    } catch (err) {
+      pre.textContent = err.message;
+    }
+  })();
+</script>
+{% endblock %}
