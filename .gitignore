@@ -8,10 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
-.env
 
 # Node.js
 node_modules/
 
 # Generated Tailwind build output
 src/static/css/style.css
+config.bat

@@ -1,11 +1,11 @@
 {
-	"scripts": {
-		"dev:tailwind": "pnpm dlx @tailwindcss/cli -i ./src/static/css/tailwind.css -o ./src/static/css/style.css --watch",
-		"dev:fastapi": "echo 'http://localhost:8000' && uv run fast-api-learn",
-		"dev": "pnpm run --parallel /dev:/"
-	},
-	"dependencies": {
-		"@tailwindcss/cli": "^4.3.3",
-		"tailwindcss": "^4.3.3"
-	}
+  "scripts": {
+    "dev:tailwind": "node api.js && pnpm dlx @tailwindcss/cli -i ./src/static/css/tailwind.css -o ./src/static/css/style.css --watch",
+    "dev:fastapi": "node api.js && echo 'http://localhost:8000' && uv run fast-api-learn",
+    "dev": "node api.js && pnpm run --parallel /dev:/"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
 }

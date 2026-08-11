@@ -14,7 +14,7 @@ A small FastAPI app with Jinja2 templates, Tailwind CSS, and a Pydantic AI agent
 ## Setup
 
 ```bash
-# Python deps
+# Python deps (installs the package + `fast-api-learn` script)
 uv sync
 
 # Frontend deps (Tailwind)
@@ -35,13 +35,17 @@ Or separately:
 
 ```bash
 pnpm run dev:fastapi   # http://localhost:8000
-pnpm run dev:tailwind  # watches src/tailwind → src/static/css
+pnpm run dev:tailwind  # watches src/static/css/tailwind.css → style.css
 ```
 
-You can also start the app with:
+`dev:fastapi` runs `uv run fast-api-learn`, which calls `main()` in `src/main.py` (host, port, and reload are configured there).
+
+You can also start the app directly:
 
 ```bash
-uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --app-dir src
+uv run fast-api-learn
+# or
+uv run python src/main.py
 ```
 
 ## Endpoints
@@ -56,11 +60,13 @@ uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --app-dir src
 
 ```
 src/
+  main.py            # Entry point (uvicorn.run)
   app/
-    main.py          # FastAPI app
+    app.py           # FastAPI app, mounts, routes
     ai/              # Pydantic AI agent, prompts, tools
-    api/             # API routes (placeholder)
   templates/         # Jinja2 HTML
   static/            # Built CSS and static assets
-  tailwind/          # Tailwind source (style.css)
+    css/
+      tailwind.css   # Tailwind source
+      style.css      # Generated output (committed)
 ```
