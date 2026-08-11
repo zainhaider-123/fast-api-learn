@@ -5,7 +5,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.requests import Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import uvicorn
 
 SRC_DIR = Path(__file__).resolve().parent.parent
 
@@ -30,6 +29,3 @@ async def home(request: Request):
 @app.get("/ping")
 async def ping():
     return {"message": "pong"}
-
-if __name__ == "__main__":
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True, app_dir=str(SRC_DIR))

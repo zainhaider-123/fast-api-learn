@@ -1,7 +1,7 @@
 {
 	"scripts": {
 		"dev:tailwind": "pnpm dlx @tailwindcss/cli -i ./src/static/css/tailwind.css -o ./src/static/css/style.css --watch",
-		"dev:fastapi": "echo 'http://localhost:8000' && uv run uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 --app-dir src",
+		"dev:fastapi": "echo 'http://localhost:8000' && uv run fast-api-learn",
 		"dev": "pnpm run --parallel /dev:/"
 	},
 	"dependencies": {
