@@ -12,3 +12,6 @@ wheels/
 
 # Node.js
 node_modules/
+
+# Generated Tailwind build output
+src/static/css/style.css
