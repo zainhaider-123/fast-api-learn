@@ -1,17 +1,20 @@
 # AGENTS.md
 
-FastAPI + Jinja2 + Tailwind v4 app with a Pydantic AI agent. Python 3.12 managed by uv/mise; frontend tooling via pnpm.
+FastAPI + Jinja2 + Tailwind v4 app with a Pydantic AI agent. Python 3.12 managed by uv/mise; frontend tooling via pnpm. Packaged with Hatchling so `uv sync` installs an editable wheel and the `fast-api-learn` console script.
 
 ## Commands
 
-- Setup: `uv sync` (Python deps) then `pnpm install` (Tailwind). `.venv` can be stale — run `uv sync` before assuming deps like `pydantic-ai` are installed.
+- Setup: `uv sync` (Python deps + package install) then `pnpm install` (Tailwind). `.venv` can be stale — run `uv sync` before assuming deps like `pydantic-ai` are installed.
 - Dev: `pnpm run dev` runs both in parallel; or `pnpm run dev:fastapi` / `pnpm run dev:tailwind` separately.
-- Raw uvicorn: `uv run uvicorn app.main:app --reload --app-dir src`. The `--app-dir src` is required — the app package is `src/app`, not a root `app/`.
+- Server entry: `pnpm run dev:fastapi` → `uv run fast-api-learn` → `main:main` in `src/main.py`. Host/port/reload live only in `src/main.py` — do not duplicate them in `package.json`.
+- Alternatives: `uv run fast-api-learn` or `uv run python src/main.py`.
 - No linters, formatters, typecheckers, or tests are configured. None exist yet (see Roadmap).
 
-## Layout traps
+## Layout
 
-- The real app lives in `src/app/` (`main.py` resolves templates/static relative to `src/`). Root-level `app/` (stale `__pycache__`) and root `static/` are leftover duplicates and are **not** served — ignore them.
+- Entry point: `src/main.py` — imports `app` from `app.app` and runs uvicorn.
+- FastAPI app: `src/app/app.py` — creates the FastAPI instance, mounts static files, defines routes. Templates/static paths resolve relative to `src/`.
+- Package: `src/app/` (installed as `app`). `src/main.py` is force-included as top-level `main` via Hatchling so the `[project.scripts]` entry `fast-api-learn = "main:main"` works.
 - Templates: `src/templates/` (Jinja2). `_base.html` links to `/about` and `/contact`, which don't exist (404).
 - Static: FastAPI mounts `src/static/` at `/static`.
 
