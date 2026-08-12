@@ -37,8 +37,8 @@ SAMPLE_RESUME = {
 
 
 @pytest.fixture()
-def client(tmp_path, monkeypatch):
-    store = ResumeStore(path=None)
+def client(monkeypatch):
+    store = ResumeStore(database_url="sqlite://")
     app.state.store = store
 
     async def fake_generate(prompt: str) -> ResumeActionResult:
@@ -50,8 +50,12 @@ def client(tmp_path, monkeypatch):
         )
 
     monkeypatch.setattr("app.api.routes.resume.generate_resume", fake_generate)
-    with TestClient(app) as test_client:
-        yield test_client
+    try:
+        with TestClient(app) as test_client:
+            yield test_client
+    finally:
+        store.close()
+        app.state.store = None
 
 
 class TestResumeApi:
