@@ -8,7 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
-.env
 
 # Node.js
 node_modules/
@@ -18,3 +17,4 @@ src/static/css/style.css
 
 # Local resume store
 data/
+config.bat
